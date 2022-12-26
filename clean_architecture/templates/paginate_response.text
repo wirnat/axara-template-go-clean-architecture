@@ -6,6 +6,6 @@ import (
 )
 
 type {{.Model}}Paginate struct {
-	Pagination *paginator.Pagination `json:"paginator,omitempty"`
+	Pagination *paginator.Pagination `json:"pagination,omitempty"`
 	Result     []model.{{.Model}}      `json:"result"`
 }

@@ -1,17 +1,13 @@
 key: ᬅᬓ᭄ᬱᬭ
-model_path: model
+model_path: domain/model
 module_name: ms-glow-erp/enterprise-pos
 execute_models:
 #  - Company
-#  - UserCompany
-#  - UserDiscount
-#  - UserLocation
-#  - UserMedia
-#  - UserPost
-#  - UserSocialMedia
 #  - ItemService
-  - Executor
-  - ExecutorItemService
+#  - Executor
+#  - ExecutorItemService
+#  - User
+  - Chat
 meta:
   architecture_dir: "factory/clean_architecture"
   result_path: modules
@@ -35,10 +31,10 @@ meta:
 ##executed every model scanned
 include_module_traits:
   - factory/clean_architecture/repository.yaml
-  - factory/clean_architecture/usecase.yaml
+#  - factory/clean_architecture/usecase.yaml
   - factory/clean_architecture/response.yaml
   - factory/clean_architecture/request.yaml
-  - factory/clean_architecture/delivery.yaml
+#  - factory/clean_architecture/delivery.yaml
 
 traits:
   - name: "download templates"

@@ -2,7 +2,6 @@ package {{.ModelSnake}}_gorm
 
 import (
 	"context"
-	"fmt"
 	"{{.Meta.import_model}}"
     "{{.Meta.import_request}}"
     "{{.Meta.import_response}}"
@@ -58,8 +57,7 @@ func (c {{.ModelCamel}}Gorm) Delete(ctx context.Context, uuid string) error {
 	if err == nil {
 		c.db = *db
 	}
-
-	return db.Delete(model.{{.Model}}{}, fmt.Sprintf("uuid=%v", uuid)).Error
+	return c.db.Debug().Where("uuid=?", uuid).Delete(&model.{{.Model}}{}).Error
 }
 
 func (c {{.ModelCamel}}Gorm) Paginate(ctx context.Context, param {{.ModelSnake}}_request.{{.Model}}Param) (response.{{.Model}}Paginate, error) {

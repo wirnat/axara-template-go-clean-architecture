@@ -21,7 +21,7 @@ func (r {{.Model}}Rest) Expose(app app.App) {
 	{{.ModelCamel}}.Get("", r.Show)
 	{{.ModelCamel}}.Get("s", r.Paginate)
 	{{.ModelCamel}}.Post("", r.Store)
-	{{.ModelCamel}}.Put("", r.Update)
+	{{.ModelCamel}}.Put("/:uuid", r.Update)
 	{{.ModelCamel}}.Delete("/:uuid", r.Delete)
 }
 

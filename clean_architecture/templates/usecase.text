@@ -25,45 +25,46 @@ func New{{.Model}}Usecase(
 	}
 }
 
-func (u {{.ModelCamel}}Usecase) Store(ctx context.Context, Param {{.ModelSnake}}_request.{{.Model}}Store) (r model.{{.Model}}, err error) {
+func (u {{.ModelCamel}}Usecase) Store(ctx context.Context, param {{.ModelSnake}}_request.{{.Model}}Store) (r model.{{.Model}}, err error) {
 	{{- range $m:=.ModelFields }}
     {{- if $m.Meta.autofill}}
     {{else}}
     {{- if eq $m.Name "UUID"}}
     r.{{- $m.Name}} = uuid.New().String()
     {{- else }}
-    r.{{- $m.Name}} = Param.{{$m.Name}}
+    r.{{- $m.Name}} = param.{{$m.Name}}
     {{- end}}
     {{- end}}
     {{- end}}
     r.SetUUID()
+    r.SetCreatedBy(ctx)
 
 	err = u.{{.ModelCamel}}Store.Store(ctx, &r)
 	return
 }
 
-func (u {{.ModelCamel}}Usecase) Update(ctx context.Context, Param {{.ModelSnake}}_request.{{.Model}}Update) (r model.{{.Model}}, err error) {
+func (u {{.ModelCamel}}Usecase) Update(ctx context.Context, param {{.ModelSnake}}_request.{{.Model}}Update) (r model.{{.Model}}, err error) {
 	{{- range $m:=.ModelFields }}
 	{{- if and (ne $m.Type "time.Time") (ne $m.Type "gorm.DeletedAt")}}
 	{{- if $m.Meta.auto_fill}}{{else}}
 	{{- if ne $m.Name "UUID"}}
 	    {{- if $m.IsPtr}}
-	    r.{{$m.Name}} = &Param.{{$m.Name}}
+	    r.{{$m.Name}} = &param.{{$m.Name}}
 	    {{- else}}
-	     r.{{$m.Name}} = Param.{{$m.Name}}
+	     r.{{$m.Name}} = param.{{$m.Name}}
 	    {{- end}}
     {{- end}}
     {{- end}}
 	{{- end}}
 	{{- end}}
 
-	err = u.{{.ModelCamel}}Update.Update(ctx, &r,{{.ModelSnake}}_request.{{.Model}}Param{UUID: &r.UUID})
+	err = u.{{.ModelCamel}}Update.Update(ctx, &r,{{.ModelSnake}}_request.{{.Model}}Param{UUID: &param.UUID})
 	if err!=nil{
 	    return
 	}
 
 	r, err = u.{{.ModelCamel}}Get.Get(ctx, {{.ModelSnake}}_request.{{.Model}}Param{
-    	UUID: &r.UUID,
+    	UUID: &param.UUID,
     })
 
 	return
