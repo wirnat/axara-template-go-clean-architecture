@@ -1,0 +1,22 @@
+package {{.Meta.dir_usecase}}
+
+import (
+	"context"
+	"{{.Meta.import_model}}"
+	"{{.Meta.import_repository}}"
+	"{{.Meta.import_request}}"
+)
+
+type {{.ModelCamel}}GetUsecase struct {
+	{{.ModelCamel}}Get {{.ModelSnake}}_repository.{{.Model}}Get
+}
+
+func New{{.Model}}GetUsecase({{.ModelCamel}}Get {{.ModelSnake}}_repository.{{.Model}}Get) *{{.ModelCamel}}GetUsecase {
+	return &{{.ModelCamel}}GetUsecase{
+	{{- .ModelCamel}}Get: {{.ModelCamel}}Get}
+}
+
+func (e {{.ModelCamel}}GetUsecase) Get(ctx context.Context, param {{.ModelSnake}}_request.{{.Model}}Param) (model.{{.Model}}, error) {
+	//TODO: keycloak access isolated data
+	return e.{{.ModelCamel}}Get.Get(ctx, param)
+}

@@ -7,7 +7,8 @@ execute_models:
 #  - Executor
 #  - ExecutorItemService
 #  - User
-  - Chat
+#  - Chat
+  - ExecutorFavorite
 meta:
   architecture_dir: "factory/clean_architecture"
   result_path: modules
@@ -25,16 +26,17 @@ meta:
   import_usecase_imp:    "~module_name~/~result_path~/~module~/usecase/~model_snake~_usecase/~model_snake~_usecase_v1"
   import_app: "~module_name~/infrastructure/app"
   template: "~architecture_dir~/templates"
+  dir_usecase: "~model_snake~_usecase_v1"
 
 
 
 ##executed every model scanned
 include_module_traits:
   - factory/clean_architecture/repository.yaml
-#  - factory/clean_architecture/usecase.yaml
+  - factory/clean_architecture/usecase.yaml
   - factory/clean_architecture/response.yaml
   - factory/clean_architecture/request.yaml
-#  - factory/clean_architecture/delivery.yaml
+  - factory/clean_architecture/delivery.yaml
 
 traits:
   - name: "download templates"

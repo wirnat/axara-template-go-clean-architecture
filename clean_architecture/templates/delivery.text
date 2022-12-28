@@ -1,19 +1,18 @@
-package {{.ModelSnake}}_http_1
+package {{.Meta.dir_usecase}}
 
 import (
-    "{{.Meta.import_http_framework}}"
-    "{{.Meta.import_usecase}}"
-    "{{.Meta.import_repository}}"
-    "{{.Meta.import_request}}"
-    "{{.Meta.import_app}}"
+	 "{{.Meta.import_http_framework}}"
+     "{{.Meta.import_usecase}}"
+     "{{.Meta.import_request}}"
+     "{{.Meta.import_app}}"
 )
 
 type {{.Model}}Rest struct {
-	{{.Model}}Interactor {{.ModelSnake}}_usecase.{{.Model}}Usecase
-	{{.Model}}FetchRepo  {{.ModelSnake}}_repository.{{.Model}}Fetch
-	{{.Model}}GetRepo    {{.ModelSnake}}_repository.{{.Model}}Get
-	{{.Model}}DeleteRepo {{.ModelSnake}}_repository.{{.Model}}Delete
-	{{.Model}}Paginate   {{.ModelSnake}}_repository.{{.Model}}Paginate
+	{{.Model}}Fetch  {{.ModelSnake}}_usecase.{{.Model}}Fetch
+	{{.Model}}Get    {{.ModelSnake}}_usecase.{{.Model}}Get
+	{{.Model}}Delete {{.ModelSnake}}_usecase.{{.Model}}Delete
+	{{.Model}}Update {{.ModelSnake}}_usecase.{{.Model}}Update
+	{{.Model}}Store  {{.ModelSnake}}_usecase.{{.Model}}Store
 }
 
 func (r {{.Model}}Rest) Expose(app app.App) {
@@ -32,7 +31,7 @@ func (r {{.Model}}Rest) Show(ctx *http_framework.Contextor) error {
 		return err
 	}
 
-	res, err := r.{{.Model}}GetRepo.Get(ctx.ToContext(), param)
+	res, err := r.{{.Model}}Get.Get(ctx.ToContext(), param)
 	if err != nil {
 		return ctx.JSON(400, err.Error())
 	}
@@ -47,7 +46,7 @@ func (r {{.Model}}Rest) Find(ctx *http_framework.Contextor) error {
 		return ctx.JSON(400, err.Error())
 	}
 
-	res, err := r.{{.Model}}FetchRepo.Fetch(ctx.ToContext(), param)
+	res, err := r.{{.Model}}Fetch.Fetch(ctx.ToContext(), param)
 	if err != nil {
 		return ctx.JSON(404, err.Error())
 	}
@@ -67,7 +66,7 @@ func (r {{.Model}}Rest) Store(ctx *http_framework.Contextor) error {
 		return err
 	}
 
-	res, err := r.{{.Model}}Interactor.Store(ctx.ToContext(), *param)
+	res, err := r.{{.Model}}Store.Store(ctx.ToContext(), *param)
 	if err != nil {
 		return ctx.JSON(500, err.Error())
 	}
@@ -87,7 +86,7 @@ func (r {{.Model}}Rest) Update(ctx *http_framework.Contextor) error {
 		return err
 	}
 
-	res, err := r.{{.Model}}Interactor.Update(ctx.ToContext(), *param)
+	res, err := r.{{.Model}}Update.Update(ctx.ToContext(), *param)
 	if err != nil {
 		return err
 	}
@@ -97,7 +96,7 @@ func (r {{.Model}}Rest) Update(ctx *http_framework.Contextor) error {
 
 func (r {{.Model}}Rest) Delete(ctx *http_framework.Contextor) error {
 	uuid := ctx.Param("uuid")
-	err := r.{{.Model}}DeleteRepo.Delete(ctx.ToContext(), uuid)
+	err := r.{{.Model}}Delete.Delete(ctx.ToContext(), uuid)
 	if err != nil {
 		return err
 	}
@@ -112,7 +111,7 @@ func (r {{.Model}}Rest) Paginate(ctx *http_framework.Contextor) error {
 		return ctx.JSON(400, err.Error())
 	}
 
-	res, err := r.{{.Model}}Paginate.Paginate(ctx.ToContext(), param)
+	res, err := r.{{.Model}}Fetch.Paginate(ctx.ToContext(), param)
 	if err != nil {
 		return ctx.JSON(404, err.Error())
 	}
