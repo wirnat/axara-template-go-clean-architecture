@@ -1,2 +1,8 @@
-# axara-template-go-clean-architecture
-A template for clean architecture golang generated using Axara CLI
+# What is being built?
+- repository interface
+- repository implement gorm
+- repository implement mock
+- usecase interface, with interface seggregation principle
+- usecase implement version, with single responsibility principle and depedency injection
+- delivery layer, depedency injection
+- crud on repository, delivery, and usecase
