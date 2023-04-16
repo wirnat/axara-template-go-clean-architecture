@@ -1,7 +1,6 @@
 key: ᬅᬓ᭄ᬱᬭ #init aksara key
-model_path: test/app/domain/model  #init model dir
+model_path: model  #init model dir
 lang: golang #available for now: golang, typescript, js, dart
-module_name: github.com/wirnat/axara  #init module gomod
 models:
     Branch:
       module: branch
@@ -9,14 +8,15 @@ models:
       module: company
 
 meta:
-  main_dir: test
-  app_dir: test/app
-  app: github.com/wirnat/axara
-  import: ~app~/cmd/v1/service/generator_v2/~app_dir~
+  main_dir: .
+  app_dir: .
+  app: todo
+  import: todo
+  this: ~main_dir~/templates/clean-architecture
+  template: ~this~/templates
+  import_model: ~import~/model
 
-  template: ~main_dir~/unclebob/templates
   infrastructure_dir: ~app_dir~/infrastructure
-  import_model: ~import~/domain/model
   import_infrastructure: ~import~/infrastructure
   import_pagination: ~import_infrastructure~/paginator
   import_trx: ~import_infrastructure~/db_transaction
@@ -33,10 +33,10 @@ meta:
 
 #jobs is queue of generator file
 include_jobs:
-  - test/unclebob/jobs/structure.yaml
-  - test/unclebob/jobs/repository.yaml
-  - test/unclebob/jobs/param.yaml
-  - test/unclebob/jobs/infrastructure.yaml
-  - test/unclebob/jobs/response.yaml
-  - test/unclebob/jobs/usecase.yaml
-  - test/unclebob/jobs/delivery.yaml
+  - ~this~/jobs/structure.yaml
+  - ~this~/jobs/repository.yaml
+  - ~this~/jobs/param.yaml
+  - ~this~/jobs/infrastructure.yaml
+  - ~this~/jobs/response.yaml
+  - ~this~/jobs/usecase.yaml
+  - ~this~/jobs/delivery.yaml

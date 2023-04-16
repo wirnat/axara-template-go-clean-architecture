@@ -16,8 +16,6 @@ func LoadConf(path ...string) {
 	viper := NewViperConf(path...)
 	err := viper.ReadConfig()
 	if err != nil {
-		log.Fatalf("Viper load fail: %v", err)
-
 		err = viper.WriteConfig(conf.DefaultAppConf)
 		if err != nil {
 			log.Fatalf("Viper load fail: %v", err)
