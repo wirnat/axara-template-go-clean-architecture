@@ -1,20 +1,20 @@
 key: ᬅᬓ᭄ᬱᬭ #init aksara key
-model_path: model  #init model dir
+model_path: domain/model  #init model dir
 lang: golang #available for now: golang, typescript, js, dart
 models:
-    Branch:
-      module: branch
-    Company:
-      module: company
+    Chat:
+      module: chat
+    User:
+      module: user
 
 meta:
   main_dir: .
   app_dir: .
-  app: todo
-  import: todo
+  app:  gitlab.com/aksaratech/aksara-chat
+  import:  gitlab.com/aksaratech/aksara-chat
   this: ~main_dir~/templates/clean-architecture
   template: ~this~/templates
-  import_model: ~import~/model
+  import_model: ~import~/domain/model
 
   infrastructure_dir: ~app_dir~/infrastructure
   import_infrastructure: ~import~/infrastructure
